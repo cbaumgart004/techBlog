@@ -13,7 +13,8 @@ router.get('/', async (req, res) => {
           },
         ],
       });
-  
+      const allUsers = await User.findAll();
+      console.log(allUsers);
       // Serialize data so the template can read it
       const blogs = blogData.map((blog) => blog.get({ plain: true }));
   
@@ -29,7 +30,7 @@ router.get('/', async (req, res) => {
   
   router.get('/blog/:id', async (req, res) => {
     try {
-      const projectData = await Blog.findByPk(req.params.id, {
+      const blogData = await Blog.findByPk(req.params.id, {
         include: [
           {
             model: User,

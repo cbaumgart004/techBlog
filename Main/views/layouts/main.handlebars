@@ -8,24 +8,34 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/login">Login </a></li>
-                <!-- Add the dropdown menu for the "Tech" category -->
-                <li class="dropdown">
-                    <a href="#">Tech</a>
-                    <ul class="dropdown-menu">
-            </ul>
-        </nav>
-    </header>
+    <div class="flex-column justify-space-around">
+        <header class="display-inline-flex justify-space-between align-center p-2">
+            <nav class="navbar">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    {{#if logged_in}}
+                    <a href="/profile">Profile</a> |
+                    <button class="no-button" id="logout">Logout</button>
+                    {{else}}
+                    <a href="/login">Login</a>
+                    {{/if}}
+                    <!-- Add the dropdown menu for the "Tech" category -->
+                    <li class="dropdown">
+                        <a href="#">Tech</a>
+                        <ul class="dropdown-menu">
+                </ul>
+            </nav>
+        </header>
 
-    <main>
+        <main>
         <h1>Tech Blog</h1>
-    {{{ body}}}
-    </main>    
+        {{{ body}}}
+        </main> 
+        {{#if logged_in}}
+        <script src="/js/logout.js"></script>
+        {{/if}}   
+    </div>
 </body>
 </html>

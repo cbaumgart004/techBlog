@@ -16,8 +16,8 @@
                     <li><a href="/about">About</a></li>
                     <li><a href="/blog">Blog</a></li>
                     {{#if logged_in}}
-                    <a href="/profile">Profile</a> |
-                    <button class="no-button" id="logout">Logout</button>
+                    <li><a href="/profile">Profile</a></li>
+                    <li><a href="/logout" id="logout">Logout</a></li>
                     {{else}}
                     <a href="/login">Login</a>
                     {{/if}}

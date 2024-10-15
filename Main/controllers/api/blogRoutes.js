@@ -70,7 +70,7 @@ router.post('/', withAuth, async (req, res) => {
     })
 
     console.log('New blog created:', newBlog)
-
+    console.log('createdAt:', newBlog.createdAt)
     res.status(200).json(newBlog)
   } catch (err) {
     console.error('Error creating blog:', err)
@@ -101,6 +101,8 @@ router.get('/:id', async (req, res) => {
     }
 
     const blog = blogData.get({ plain: true })
+    console.log('Blog fetched:', blog)
+    console.log('createdAt:', blog.createdAt)
 
     res.status(200).json(blog)
   } catch (err) {

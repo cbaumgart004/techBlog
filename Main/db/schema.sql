@@ -5,21 +5,18 @@ CREATE DATABASE techblog_db;
 \c techblog_db;
 
 -- Create the Users table
-CREATE TABLE users (
+CREATE TABLE user (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     profile_picture VARCHAR(255),
-    role VARCHAR(10) DEFAULT 'user',  -- can be 'user' or 'admin'
-    date_of_birth DATE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP NULL  -- for soft deletes
+    role VARCHAR(10) DEFAULT 'user'  -- can be 'user' or 'admin'
+    
 );
 
 -- Create the Blogs table
-CREATE TABLE blogs (
+CREATE TABLE blog (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
@@ -27,9 +24,9 @@ CREATE TABLE blogs (
     status VARCHAR(10) DEFAULT 'draft',  -- can be 'draft', 'published', or 'archived'
     user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL,  -- for soft deletes
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 -- Create the Comments table (optional, if you want to add commenting functionality)
@@ -39,7 +36,7 @@ CREATE TABLE comments (
     user_id INT NOT NULL,
     blog_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (blog_id) REFERENCES blogs(id) ON DELETE CASCADE
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (blog_id) REFERENCES blog(id) ON DELETE CASCADE
 );

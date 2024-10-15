@@ -1,39 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>Tech Blog</title>
-    <link rel="stylesheet" href="/css/jass.css">
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <div class="flex-column justify-space-around">
-        <header class="display-inline-flex justify-space-between align-center p-2">
-            <nav class="navbar">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/blog">Blog</a></li>
-                    {{#if logged_in}}
-                    <li><a href="/profile">Profile</a></li>
-                    <li><a href="/logout" id="logout">Logout</a></li>
-                    {{else}}
-                    <a href="/login">Login</a>
-                    {{/if}}
-                    
-                    
-                </ul>
-            </nav>
-        </header>
+    <link rel='stylesheet' href='/css/jass.css' />
+    <link rel='stylesheet' href='/css/style.css' />
+  </head>
+  <body>
+    <div class='flex-column justify-space-around'>
+      <header
+        class='display-inline-flex justify-space-between align-center p-2'
+      >
+        <nav class='navbar'>
+          <ul>
+            <li><a href='/'>Home</a></li>
+            <li><a href='/about'>About</a></li>
+            <li><a href='/blog'>Blog</a></li>
+            {{#if logged_in}}
+              <li><a href='/profile'>Profile</a></li>
+              <li><a href='/logout' id='logout'>Logout</a></li>
+            {{else}}
+              <a href='/login'>Login</a>
+            {{/if}}
 
-        <main>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
         <h1>Tech Blog</h1>
-        {{{ body}}}
-        </main> 
-        {{#if logged_in}}
-        <script src="/js/logout.js"></script>
-        {{/if}}   
+        {{{body}}}
+      </main>
+      {{#if logged_in}}
+        <script src='/js/logout.js'></script>
+      {{/if}}
     </div>
-</body>
+    <script src='/js/blog.js'></script>
+  </body>
 </html>

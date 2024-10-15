@@ -29,7 +29,54 @@ router.get('/', async (req, res) => {
     res.status(500).json(err)
   }
 })
+//GET all blogs by a specific user
 
+router.get('/user/:userId', async (req, res) => {
+  try {
+    const blogData = await Blog.findAll({
+      where: { user_id: req.params.userId },
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+        {
+          model: Comment, // Include Comment model
+          include: {
+            model: User, // Include User model for comment author
+            attributes: ['name'],
+          },
+        },
+      ],
+    })
+
+    const blogs = blogData.map((blog) => blog.get({ plain: true }))
+
+    res.status(200).json(blogs)
+  } catch (err) {
+    console.error('Error fetching blogs:', err)
+    res.status(500).json(err)
+  }
+})
+
+//POST a new blog
+
+router.post('/', withAuth, async (req, res) => {
+  try {
+    const newBlog = await Blog.create({
+      title: req.body.name,
+      content: req.body.description,
+      user_id: req.session.user_id,
+    })
+
+    console.log('New blog created:', newBlog)
+
+    res.status(200).json(newBlog)
+  } catch (err) {
+    console.error('Error creating blog:', err)
+    res.status(400).json(err)
+  }
+})
 // GET a single blog by ID with comments
 router.get('/:id', async (req, res) => {
   try {

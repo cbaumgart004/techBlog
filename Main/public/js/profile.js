@@ -1,56 +1,66 @@
 const newFormHandler = async (event) => {
-    event.preventDefault();
+  event.preventDefault()
 
-    const name = document.querySelector('#blog-name').value.trim();
-    const description = document.querySelector('#blog-desc').value.trim();
+  const name = document.querySelector('#blog-name').value.trim()
+  const description = document.querySelector('#blog-desc').value.trim()
 
-    if (name && description) {
-        const response = await fetch(`/api/blogs`, {
-            method: 'POST',
-            body: JSON.stringify({ name, description }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-    
-        response.then(res => res.json())
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
-    } else {
-        alert('Please enter both a name and description for your blog.');
+  if (name && description) {
+    try {
+      // Await fetch and response processing in the same block
+      const response = await fetch(`/api/blogs`, {
+        method: 'POST',
+        body: JSON.stringify({ name, description }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      // Parse the response only once
+      const data = await response.json()
+
+      if (response.ok) {
+        console.log('Blog created successfully:', data)
+        document.location.replace('/profile') // Reload to show the new blog
+      } else {
+        alert('Failed to create blog')
+      }
+    } catch (error) {
+      console.error('Error creating blog:', error)
     }
-    
-    if (response.ok) {
-        document.location.replace('/profile');
-        
-        console.log(response.json());
-    } else {
-        alert('Failed to create blog');
-        }
-    };
+  } else {
+    alert('Please enter both a name and description for your blog.')
+  }
+}
 
+const delButtonHandler = async (event) => {
+  // Check if the clicked element has the delete button's class and data-id attribute
+  if (
+    event.target.matches('.btn-danger') &&
+    event.target.hasAttribute('data-id')
+  ) {
+    const id = event.target.getAttribute('data-id')
 
-    const delButtonHandler = async (event) => {
-    if (event.target.hasAttribute('data-id')) {
-        const id = event.target.getAttribute('data-id');
-  
-        const response = await fetch(`/api/blogs/${id}`, {
+    try {
+      const response = await fetch(`/api/blogs/${id}`, {
         method: 'DELETE',
-        });
-  
-        if (response.ok) {
-        document.location.replace('/profile');
-        } else {
-        alert('Failed to delete blog');
-        }
+      })
+
+      if (response.ok) {
+        document.location.replace('/profile') // Reload to update the blog list
+      } else {
+        alert('Failed to delete blog')
+      }
+    } catch (error) {
+      console.error('Error deleting blog:', error)
     }
-};
-//add event listeners to the form and delete buttons
-document
-    .querySelector('.new-blog-form')
-    .addEventListener('submit', newFormHandler);
-
+  }
+}
 
 document
-    .querySelector('.blog-list')
-    .addEventListener('click', delButtonHandler);
+  .querySelector('.new-blog-form')
+  .addEventListener('submit', newFormHandler)
+
+// Add event listener for the delete button clicks using event delegation
+document
+  .querySelector('.project-list')
+  .addEventListener('click', delButtonHandler)

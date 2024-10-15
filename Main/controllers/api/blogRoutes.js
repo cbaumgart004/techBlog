@@ -5,14 +5,19 @@ const connection = require('../../config/connection')
 //post a blog route for authenticated users
 router.post('/', withAuth, async (req, res) => {
   try {
+    console.log('POST /api/blogs called') // Log when the route is hit
+    console.log('Request body:', req.body)
+
     const newBlog = await Blog.create({
-      title: req.body.name, // Ensure this matches what you send in the request
-      content: req.body.description, // Ensure this matches what you send in the request
+      title: req.body.name,
+      content: req.body.description,
       user_id: req.session.user_id,
     })
+
+    console.log('New blog created:', newBlog) // Log the newly created blog
     res.status(200).json(newBlog)
   } catch (err) {
-    console.error(err) // Log the error for debugging
+    console.error('Error creating blog:', err) // Log the error for debugging
     res.status(400).json(err)
   }
 })

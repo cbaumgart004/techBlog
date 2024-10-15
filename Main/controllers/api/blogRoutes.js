@@ -1,72 +1,80 @@
 const router = require('express').Router()
-const { User, Blog } = require('../../models')
+const { Blog, User, Comment } = require('../../models') // Include Comment model
 const withAuth = require('../../utils/auth')
-const connection = require('../../config/connection')
-//post a blog route for authenticated users
-router.post('/', withAuth, async (req, res) => {
-  try {
-    console.log('POST /api/blogs called') // Log when the route is hit
-    console.log('Request body:', req.body)
 
-    const newBlog = await Blog.create({
-      title: req.body.name,
-      content: req.body.description,
-      user_id: req.session.user_id,
-    })
-
-    console.log('New blog created:', newBlog) // Log the newly created blog
-    res.status(200).json(newBlog)
-  } catch (err) {
-    console.error('Error creating blog:', err) // Log the error for debugging
-    res.status(400).json(err)
-  }
-})
-//get all blogs route
-// Get all blogs for the logged-in user
-router.get('/', withAuth, async (req, res) => {
+// GET all blogs with their comments
+router.get('/', async (req, res) => {
   try {
     const blogData = await Blog.findAll({
-      where: {
-        user_id: req.session.user_id, // Only fetch blogs for logged-in user
-      },
-      include: [{ model: User, attributes: ['name'] }],
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+        {
+          model: Comment, // Include Comment model
+          include: {
+            model: User, // Include User model for comment author
+            attributes: ['name'],
+          },
+        },
+      ],
     })
 
-    // Serialize data so that it's plain JSON
     const blogs = blogData.map((blog) => blog.get({ plain: true }))
 
-    // Find the user's name (assuming it's stored in session or fetched separately)
-    const userName =
-      req.session.username || (await User.findByPk(req.session.user_id)).name
-
-    // Render the 'profile' Handlebars template and pass the user and blogs data
-    res.render('profile', {
-      name: userName, // user's name to display in the profile
-      blogs, // blogs to display
-      logged_in: req.session.logged_in, // is user logged in
-    })
+    res.status(200).json(blogs)
   } catch (err) {
-    console.error(err)
+    console.error('Error fetching blogs:', err)
     res.status(500).json(err)
   }
 })
 
-router.delete('/:id', withAuth, async (req, res) => {
+// GET a single blog by ID with comments
+router.get('/:id', async (req, res) => {
   try {
-    const blogData = await Blog.destroy({
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
+    const blogData = await Blog.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+        {
+          model: Comment, // Include Comment model
+          include: {
+            model: User, // Include User model for comment author
+            attributes: ['name'],
+          },
+        },
+      ],
     })
 
     if (!blogData) {
-      res.status(404).json({ message: 'No blog found with this id!' })
-      return
+      return res.status(404).json({ message: 'Blog not found' })
     }
 
-    res.status(200).json(blogData)
+    const blog = blogData.get({ plain: true })
+
+    res.status(200).json(blog)
   } catch (err) {
+    console.error('Error fetching blog:', err)
+    res.status(500).json(err)
+  }
+})
+
+// POST a new comment
+router.post('/comments', withAuth, async (req, res) => {
+  try {
+    console.log('New comment:', req.body)
+    const newComment = await Comment.create({
+      text: req.body.commentText,
+      blog_id: req.body.blogId,
+      user_id: req.session.user_id,
+    })
+
+    res.status(200).json(newComment)
+  } catch (err) {
+    console.error('Error submitting comment:', err)
     res.status(500).json(err)
   }
 })

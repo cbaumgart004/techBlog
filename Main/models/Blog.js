@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 const sequelize = require('../config/connection')
+const Comment = require('./Comment')
 
 class Blog extends Model {}
 
@@ -43,5 +44,12 @@ Blog.init(
     modelName: 'blog',
   }
 )
+// add comments to the Blog model
+Blog.hasMany(Comment, {
+  foreignKey: 'blog_id',
+})
 
+Comment.belongsTo(Blog, {
+  foreignKey: 'blog_id',
+})
 module.exports = Blog

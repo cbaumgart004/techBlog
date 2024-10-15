@@ -1,45 +1,51 @@
-<div class ="row">
-    <div class="col-auto">
-        <h2>Welcome, {{name}} to your Personal Blog Entries</h2>
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-12'>
+      <!-- Blog Title -->
+      <h2 id='blog-title'>{{blog.title}}</h2>
+      <p id='blog-author'>By {{blog.user.name}}</p>
+
+      <!-- Blog Content -->
+      <p id='blog-content'>{{blog.content}}</p>
     </div>
+  </div>
+
+  <!-- Render existing comments -->
+  <div class='row mt-4' id='comments-container'>
+    <div class='col-md-12'>
+      <h3>Comments:</h3>
+
+      {{#if blog.comments.length}}
+        {{#each blog.comments as |comment|}}
+          <div class='comment-box'>
+            <p><strong>{{comment.user.name}}</strong> said:</p>
+            <p>{{comment.text}}</p>
+          </div>
+        {{/each}}
+      {{else}}
+        <p>No comments yet. Be the first to comment!</p>
+      {{/if}}
+    </div>
+  </div>
+
+  <!-- Comment Form -->
+  <div class='row mt-4'>
+    <div class='col-md-12'>
+      <h4>Leave a Comment:</h4>
+      <form id='comment-form'>
+        <div class='form-group'>
+          <textarea
+            id='comment-text'
+            class='form-control'
+            placeholder='Write your comment here...'
+            rows='4'
+            required
+          ></textarea>
+        </div>
+        <button type='submit' class='btn btn-primary'>Submit Comment</button>
+      </form>
+    </div>
+  </div>
 </div>
 
-<div class="row mt-4">
-<div class="col-md-6">
-    <h3>Create a New Blog:</h3>
-
-    <form class="form new-blog-form">
-        <div class="form-group">
-            <label for="blog-name">Blog name:</label>
-            <input class="form-input" type="text" id="blog-name" name="blog-name" />
-        </div>
-
-        <div class="form-group">
-            <label for="blog-desc">Description:</label>
-            <textarea class="form-input" id="blog-desc" name="blog-desc"></textarea>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Create</button>
-        </div>
-    </form>
-</div>  
-<!-- Render existing blogs-->
-{{#if blogs.length}}
-    <div class="col-md-6 project-list">
-    <h3>Current Projects:</h3>
-
-{{#each blogs as |blog|}}
-    <div class="row mb-2">
-        <div class="col-md-8">
-            <h4><a href="/blog/{{blog.id}}">{{blog.name}}</a></h4>
-        </div>
-        <div class="col-md-4">
-            <button class="btn btn-sm btn-danger" data-id="{{blog.id}}">DELETE</button>
-        </div>
-    </div>
-    {{/each}}
-    </div>
-{{/if}}
-</div>
-
-<script src="./js/profile.js"></script>
+<script src='/js/blog.js'></script>

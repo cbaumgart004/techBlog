@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (commentText) {
       try {
-        //post the comment to the server using fetch API
+        // Post the comment to the server using fetch API
         const response = await fetch(`/api/blogs/comments`, {
           method: 'POST',
           body: JSON.stringify({ blogId, commentText }),
@@ -63,6 +63,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           // Clear the comment input field
           document.getElementById('comment-text').value = ''
+        } else if (response.status === 401) {
+          // If the user is not logged in, redirect to login
+          alert('Please log in to submit a comment')
+          window.location.href = '/login'
         } else {
           const errorText = await response.text()
           console.error('Error submitting comment:', errorText)

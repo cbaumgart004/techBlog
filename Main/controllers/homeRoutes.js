@@ -15,6 +15,8 @@ router.get('/', async (req, res) => {
       });
       const allUsers = await User.findAll();
       console.log(allUsers);
+      const allBlogs = await Blog.findAll();
+      console.log(allBlogs);
       // Serialize data so the template can read it
       const blogs = blogData.map((blog) => blog.get({ plain: true }));
   

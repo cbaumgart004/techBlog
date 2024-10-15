@@ -22,19 +22,23 @@ router.get('/', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.findAll({
       where: {
-        user_id: req.session.user_id,
+        user_id: req.session.user_id, // Only fetch blogs for logged-in user
       },
-      // include the User model to snag details
       include: [{ model: User, attributes: ['name'] }],
     })
 
-    // Serialize data
+    // Serialize data so that it's plain JSON
     const blogs = blogData.map((blog) => blog.get({ plain: true }))
 
-    // Render the Handlebars template and pass the blogs data
-    res.render('blog', {
-      blogs,
-      logged_in: req.session.logged_in, // Pass logged-in status if needed
+    // Find the user's name (assuming it's stored in session or fetched separately)
+    const userName =
+      req.session.username || (await User.findByPk(req.session.user_id)).name
+
+    // Render the 'profile' Handlebars template and pass the user and blogs data
+    res.render('profile', {
+      name: userName, // user's name to display in the profile
+      blogs, // blogs to display
+      logged_in: req.session.logged_in, // is user logged in
     })
   } catch (err) {
     console.error(err)

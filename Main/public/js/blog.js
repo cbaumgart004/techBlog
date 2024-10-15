@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   const newBlogForm = document.querySelector('.new-blog-form')
 
-  if (newBlogForm) {
+  if (newBlogForm && !newBlogForm.dataset.listenerAdded) {
     // Ensure the form exists and add the event listener only once
     newBlogForm.addEventListener('submit', newBlogFormHandler)
+    newBlogForm.dataset.listenerAdded = true // Mark that the listener has been added
   }
 })
 
@@ -18,7 +19,6 @@ const newBlogFormHandler = async (event) => {
 
   if (name && description) {
     const response = await fetch('/api/blogs', {
-      // Ensure this matches your route
       method: 'POST',
       body: JSON.stringify({ name, description }),
       headers: { 'Content-Type': 'application/json' },

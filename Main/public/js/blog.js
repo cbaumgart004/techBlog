@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       commentsContainer.innerHTML = '' // Clear existing comments
       blog.comments.forEach((comment) => {
         const commentDiv = document.createElement('div')
+
         commentDiv.className = 'comment-box'
         commentDiv.innerHTML = `<p><strong>${comment.user.name}</strong> said:</p><p>${comment.text}</p>`
         commentsContainer.appendChild(commentDiv)

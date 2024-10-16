@@ -1,14 +1,17 @@
 <div class='container'>
   <div class='row'>
     <div class='col-md-12'>
+      <div class='blog-header'>
       <!-- Blog Title -->
       <h2 id='blog-title'>
+        
         <a href='/profile'>{{blog.title}}</a>
         <!-- Ensure this renders correctly -->
       </h2>
-      <p id='blog-author'>By {{user.name}}</p>
+      <p id='blog-info'>By {{user.name}} at {{blog.createdAt}}</p>
       <p id='blog-created-at'></p>
-
+      </div>
+      </div>
       <!-- Blog Content -->
       <p id='blog-content'>{{blog.content}}</p>
     </div>

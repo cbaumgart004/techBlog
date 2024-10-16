@@ -1,5 +1,11 @@
 function formatDate(dateString) {
   const date = new Date(dateString) // Convert to Date object
+  const options = { year: '2-digit', month: '2-digit', day: '2-digit' } // Use 2-digit format for year, month, and day
+  return date.toLocaleDateString('en-US', options) // Format date as MM/DD/YY
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString) // Convert to Date object
   const options = { year: 'numeric', month: 'long', day: 'numeric' } // Define formatting options
   return date.toLocaleDateString('en-US', options) // Format date
 }
@@ -22,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Render blog content into the Handlebars template
     document.getElementById('blog-title').textContent = blog.title
-    document.getElementById('blog-author').textContent = `By ${blog.user.name}`
+    document.getElementById('blog-info').textContent = `By ${blog.user.name}`
     document.getElementById('blog-content').innerHTML = blog.content
     document.getElementById(
       'blog-created-at'
@@ -37,7 +43,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const commentDiv = document.createElement('div')
 
         commentDiv.className = 'comment-box'
-        commentDiv.innerHTML = `<p><strong>${comment.user.name}</strong> said:</p><p>${comment.text}</p>`
+        commentDiv.innerHTML = `<p>On ${formatDate(
+          comment.createdAt
+        )}<p><strong>${comment.user.name}</strong> said:</p><p>${
+          comment.text
+        }</p>`
         commentsContainer.appendChild(commentDiv)
       })
     } else {

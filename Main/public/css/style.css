@@ -1,27 +1,215 @@
-header, .blog:not(:last-child) {
-    border-bottom: 1px solid #ccc;
-    
-}
-/*use flex to set nav bar to align horizontal*/
-.navbar {
-    
-    justify-content: space-between;
-    
+header {
+  background-color: #343a40; /* Dark background for the header */
+  color: white; /* White text */
+  padding: 20px 30px; /* Padding inside the header */
+  display: flex; /* Flexbox to align items */
+  justify-content: space-between; /* Space between logo/title and navigation */
+  align-items: center; /* Vertically center the content */
 }
 
-.navbar ul {
-    display: flex;
-    list-style: none;
-    
+/* Style for the Tech Blog title */
+header h1 {
+  font-size: 2.5rem; /* Increase the font size */
+  font-family: 'Arial', sans-serif; /* Use a clean font */
+  margin: 0;
 }
-.navbar ul li {
-
-    margin: 0 10px; /* Adjust the margin as needed */
+header nav {
+  margin-left: auto; /* Push the links to the right */
 }
 
+/* Style for the nav */
+header nav ul {
+  list-style: none; /* Remove bullets */
+  padding: 0;
+  margin: 0;
+  display: flex; /* Display links in a row */
+  gap: 15px; /* Space between the links */
+}
 
+/* Style for each link in the nav */
+header nav ul li {
+  margin: 0;
+}
+
+header nav ul li a {
+  font-size: 1.2rem; /* Increase font size for the links */
+  color: white; /* White text */
+  padding: 10px 20px; /* Add padding to make it look like a button */
+  background-color: #007bff; /* Primary button color (blue) */
+  border-radius: 5px; /* Slightly rounded corners */
+  text-decoration: none; /* Remove underline from the links */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+/* Hover effect for the links */
+header nav ul li a:hover {
+  background-color: #0056b3; /* Darker blue when hovered */
+}
+
+/* Align the navigation links to the right */
+header nav {
+  margin-left: auto; /* Push the links to the right */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem; /* Reduce title size on smaller screens */
+  }
+
+  header nav ul li a {
+    font-size: 1rem; /* Adjust link size on smaller screens */
+    padding: 8px 16px;
+  }
+}
+/* Style for the main content container */
+.content-main {
+  background-color: #f0f8ff; /* Light, soft blue background */
+
+  padding: 20px 30px; /* Padding: 20px on top/bottom, 30px on left/right */
+  border-radius: 10px; /* Slightly rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+  margin: 20px 0; /* Add space on top and bottom */
+  width: calc(100% - 60px); /* Take up full width minus the padding */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Style for child elements inside .content-main */
+.content-main > * {
+  background-color: #ffffff; /* White background for child elements */
+  padding: 15px; /* Padding inside each child element */
+  border-radius: 8px; /* Rounded corners for child boxes */
+  margin-bottom: 20px; /* Space between each child element */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for child elements */
+  border: 1px solid #ddd; /* Light border around child elements */
+}
+
+/* Additional styling for specific child elements if needed */
+.content-main h1,
+.content-main h2,
+.content-main p {
+  margin: 0; /* Remove default margin */
+  font-family: 'Arial', sans-serif; /* Use a clean, readable font */
+}
+
+.content-main a {
+  text-decoration: none;
+  color: #007bff; /* Link color */
+  transition: color 0.3s; /* Smooth hover effect */
+}
+
+.content-main a:hover {
+  color: #0056b3; /* Darker blue on hover */
+}
 
 .no-button:hover {
-    color: #065b83;
-    text-decoration: underline;
+  color: #065b83;
+  text-decoration: underline;
+}
+.blogs-container {
+  display: flex; /* Allows for flexbox layout */
+  flex-direction: column; /* Stack blog posts vertically */
+  gap: 20px; /* Space between blog posts */
+  padding: 20px; /* Add some padding around the container */
+}
+
+.blog-post {
+  border: 1px solid #ccc; /* Border for the blog post */
+  border-radius: 5px; /* Rounded corners */
+  overflow: hidden; /* Hide overflow to maintain shape */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+.blog-header {
+  background-color: #0e3f74; /* Background color for title */
+  display: flex;
+  justify-content: space-between; /* Space between title and date */
+  color: white; /* Ensure title text is white */
+  padding: 10px; /* Padding around the title */
+  margin: 0; /* Remove default margin */
+  font-size: 1.5rem; /* Make the title larger */
+}
+.blog-post h2 a {
+  color: rgb(219, 148, 219);
+}
+.blog-post p {
+  padding: 30px 15px; /* 30px top and bottom, 15px left and right */
+  margin: 0; /* Remove default margin */
+
+  overflow: auto; /* Allow scrolling if content overflows */
+}
+
+/* Optional: Style for when the content is too long */
+.blog-post p:empty::before {
+  content: 'No content available'; /* Placeholder for empty paragraphs */
+  color: #888; /* Light gray text */
+}
+
+.col-md-8 {
+  border: 1px solid #ccc; /* Same border as blog-post */
+  border-radius: 5px; /* Rounded corners */
+  overflow: hidden; /* Hide overflow to maintain shape */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  padding: 15px; /* Add padding */
+  margin-bottom: 20px; /* Space between elements */
+}
+.form {
+  background-color: #f9f9f9; /* Light background for the form */
+  padding: 20px; /* Add padding inside the form */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  margin-bottom: 20px; /* Space below the form */
+  max-width: 600px; /* Set max-width for a more compact form */
+  margin: auto; /* Center the form */
+}
+
+.form-group {
+  margin-bottom: 20px; /* Space between form groups */
+}
+
+.form-group label {
+  font-weight: bold; /* Bold labels */
+  margin-bottom: 10px; /* Space between label and input */
+  display: block; /* Block display to ensure spacing */
+}
+
+.form-input,
+.form-control {
+  width: 100%; /* Full width inputs */
+  padding: 10px; /* Padding inside the input fields */
+  border-radius: 5px; /* Rounded input corners */
+  border: 1px solid #ccc; /* Light gray border */
+  font-size: 1rem; /* Slightly larger font for readability */
+  transition: border-color 0.3s ease; /* Smooth transition on focus */
+  box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.form-input:focus,
+.form-control:focus {
+  border-color: #007bff; /* Blue border on focus */
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Slight glow effect on focus */
+}
+
+textarea.form-control {
+  resize: vertical; /* Allow vertical resize only */
+}
+
+button.btn-primary {
+  background-color: #007bff; /* Primary blue background */
+  color: white; /* White text */
+  padding: 10px 20px; /* Button padding */
+  border: none; /* Remove default borders */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+button.btn-primary:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+button.btn-primary:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a shadow on focus */
 }

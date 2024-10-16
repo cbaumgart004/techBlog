@@ -1,4 +1,3 @@
-<h1>All Blogs</h1>
 {{#unless logged_in}}
 <h2>Log In Now to View and Add Comments!</h2>
 {{/unless}}
@@ -7,16 +6,21 @@
   {{#if blogs.length}}
     {{#each blogs}}
       <div class='blog-post'>
-        <h2>
+        <div class='blog-header'> <!-- New div for the header -->
+          <h2>
           {{#if ../logged_in}} <!-- Check if user is logged in -->
             <a href='/blog/{{this.id}}'>{{this.title}}</a>
           {{else}}
             {{this.title}}
           {{/if}}
-        </h2>
-        <p>By {{this.user.name}} on {{formatDate this.createdAt}}</p>
-        <p>{{this.content}}</p>
-      </div>
+          </h2>
+          <p>By {{this.user.name}} on {{formatDate this.createdAt}}</p>
+        </div>
+        
+        <div class='blog-info'>
+          <p>{{this.content}}</p>
+        </div>
+      </div> <!-- Close the blog-post div properly -->
     {{/each}}
   {{else}}
     <p>No blogs available.</p>
@@ -24,7 +28,4 @@
 </div>
 
 <!-- Add the login status to a script tag -->
-<script>
-  const isLoggedIn = {{../logged_in}}; // Use Handlebars to pass the value
-</script>
 <script src='/js/home.js'></script>

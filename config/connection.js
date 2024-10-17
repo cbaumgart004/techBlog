@@ -3,8 +3,16 @@ require('dotenv').config()
 
 let sequelize
 
-if (process.env.DB_URL) {
-  sequelize = new Sequelize(process.env.DB_URL)
+if (process.env.DATABASE_URL) {
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false, // Allows for self-signed certificates
+      },
+    },
+  })
 } else {
   sequelize = new Sequelize(
     process.env.DB_NAME,
